@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Haixu Song’s professional portfolio and AI and machine learning timeline project.">
+  <title>Haixu Song | AI &amp; Machine Learning Timeline</title>
+  <style>
+    :root { color-scheme: light; --ink:#172b3a; --muted:#435a67; --accent:#006d70; --paper:#f6f5f0; --line:#d5e0dc; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:17px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    a { color:var(--accent); text-underline-offset:.18em; }
+    a:focus-visible { outline:3px solid #d87d47; outline-offset:4px; }
+    .wrap { width:min(1050px, calc(100% - 40px)); margin:auto; }
+    header { background:#e3eeea; border-bottom:1px solid var(--line); padding:48px 0 44px; }
+    .eyebrow { color:var(--accent); text-transform:uppercase; font-size:.78rem; font-weight:750; letter-spacing:.12em; }
+    h1 { font-size:clamp(2.5rem, 6vw, 4.6rem); letter-spacing:-.045em; line-height:1.05; margin:.25em 0; }
+    h2 { font-size:clamp(1.6rem,3vw,2.2rem); letter-spacing:-.025em; line-height:1.2; margin:0 0 .75em; }
+    h3 { font-size:1.12rem; margin:1.5em 0 .25em; }
+    .lede { max-width:720px; font-size:1.12rem; color:var(--muted); }
+    main section { padding:48px 0; border-bottom:1px solid var(--line); }
+    .two { display:grid; grid-template-columns:1fr 2fr; gap:48px; }
+    p { margin:.55em 0 1em; }
+    .download { display:inline-block; margin:12px 0; padding:11px 18px; color:white; background:var(--accent); border-radius:5px; text-decoration:none; font-weight:700; }
+    figure { margin:26px 0 42px; }
+    figure img { width:100%; height:auto; display:block; border:1px solid #c6d4cf; }
+    figcaption { font-size:.9rem; color:var(--muted); margin-top:8px; }
+    ol { padding-left:1.35em; } li { margin:.45em 0; }
+    footer { padding:30px 0 55px; color:var(--muted); font-size:.9rem; }
+    @media (max-width:700px) { .two { grid-template-columns:1fr; gap:12px; } main section { padding:35px 0; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Professional portfolio</div>
+      <h1>Haixu Song</h1>
+      <p class="lede">Senior software engineer exploring practical, responsible applications of artificial intelligence and machine learning.</p>
+      <a href="#project">View the featured project</a>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="two" id="about">
+      <div><h2>About me</h2></div>
+      <div>
+        <p>I am a senior software engineer at Walmart in Bentonville, Arkansas, and a graduate student studying artificial intelligence and data analytics at Indiana Wesleyan University. I use AI tools to support learning and problem-solving, and I am developing a stronger understanding of how AI systems are evaluated and applied.</p>
+        <h3>What I bring</h3>
+        <p>I bring an engineering perspective to AI: define the problem, examine the evidence, and consider how the system will behave in practice. I aim to explain technical ideas clearly so that teams can make informed decisions about adoption and responsible use.</p>
+      </div>
+    </section>
+    <section id="project">
+      <div class="eyebrow">Featured work · AIML-500</div>
+      <h2>AI &amp; machine learning: advances and resets</h2>
+      <p class="lede">A visual timeline of selected milestones from 1950 through 2025, prepared for readers who want a clear introduction to how AI research, computing infrastructure, and expectations have shaped one another.</p>
+      <a class="download" href="assets/Song_Haixu_AI_ML_Timeline.pptx" download>Download the PowerPoint timeline</a>
+      <h3>Objective</h3>
+      <p>Explain major developments in AI and machine learning, including periods when funding and interest declined, and connect historical advances to the practical question of whether a system can reliably solve a specific problem.</p>
+      <h3>Approach and tools</h3>
+      <p>The presentation organizes a selective chronology across four periods. It connects research milestones with datasets, GPUs, cloud infrastructure, and the limits of ambitious claims. The timeline is chronological, but spacing is not proportional to elapsed time. The editable PowerPoint includes source links in slide notes. OpenAI Codex assisted with research organization, wording, and slide construction.</p>
+      <p>A classmate's feedback prompted a clarification: cloud computing and deep learning developed in overlapping periods. Amazon EC2 launched in 2006, AlexNet's ImageNet paper appeared in 2012, and AWS announced EC2 G2 GPU instances in 2013. The sequence does not mean cloud services began after AlexNet. This clarification is added to the portfolio page; the original presentation remains unchanged.</p>
+      <h3>Value for the audience</h3>
+      <p>For colleagues and other learners, the timeline offers context for evaluating AI claims. It distinguishes a compelling demonstration from a reliable deployment and shows why data, compute, operating cost, and responsible use deserve attention alongside model performance.</p>
+      <figure><img src="assets/slide-2.png" alt="Timeline from 1950 to 1966: Turing, Dartmouth, the perceptron, and ELIZA."><figcaption>Early ideas and the establishment of AI as a research field.</figcaption></figure>
+      <figure><img src="assets/slide-3.png" alt="Timeline from 1973 to 1997: the first AI winter, backpropagation, the second AI winter, and Deep Blue."><figcaption>Funding setbacks and research developments between 1973 and 1997.</figcaption></figure>
+      <figure><img src="assets/slide-4.png" alt="Timeline from 2006 to 2016: Amazon EC2, AlexNet, cloud GPUs, and AlphaGo."><figcaption>Datasets, GPUs, and cloud resources made larger-scale work more practical.</figcaption></figure>
+      <figure><img src="assets/slide-5.png" alt="Timeline from 2017 to 2025: the transformer, ChatGPT, AlphaFold 3, and DeepSeek-R1."><figcaption>Selected developments in language models and scientific applications.</figcaption></figure>
+      <h3>Selected references</h3>
+      <ol>
+        <li>Turing, A. M. (1950). <a href="https://doi.org/10.1093/mind/LIX.236.433">Computing machinery and intelligence</a>.</li>
+        <li>McCarthy, J., Minsky, M., Rochester, N., &amp; Shannon, C. (1955). <a href="https://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html">A proposal for the Dartmouth summer research project on artificial intelligence</a>.</li>
+        <li>IBM. (2026). <a href="https://www.ibm.com/think/topics/history-of-artificial-intelligence">The history of artificial intelligence</a>.</li>
+        <li>Krizhevsky, A., Sutskever, I., &amp; Hinton, G. E. (2012). <a href="https://papers.nips.cc/paper_files/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html">ImageNet classification with deep convolutional neural networks</a>.</li>
+        <li>Amazon Web Services. (2010). <a href="https://aws.amazon.com/blogs/aws/happy-4th-birthday-amazon-ec2/">Happy fourth birthday, Amazon EC2</a>; and (2013). <a href="https://aws.amazon.com/about-aws/whats-new/2013/11/04/announcing-new-amazon-ec2-gpu-instance-type/">Announcing new Amazon EC2 GPU instance type</a>.</li>
+        <li>Vaswani, A., et al. (2017). <a href="https://arxiv.org/abs/1706.03762">Attention is all you need</a>.</li>
+      </ol>
+      <p>Additional references and full links appear in the presentation.</p>
+    </section>
+  </main>
+  <footer class="wrap">Haixu Song · Graduate coursework portfolio</footer>
+</body>
+</html>
