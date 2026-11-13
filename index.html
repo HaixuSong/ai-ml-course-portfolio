@@ -36,7 +36,7 @@
       <div class="eyebrow">Professional portfolio</div>
       <h1>Haixu Song</h1>
       <p class="lede">Senior software engineer and student of machine learning fundamentals.</p>
-      <a href="#project">Explore the timeline</a> · <a href="#incident-guide">Read the incident-review guide</a>
+      <a href="#project">Explore the timeline</a> · <a href="#incident-guide">Read the incident-review guide</a> · <a href="#neural-network">Try the neural network demo</a>
     </div>
   </header>
   <main class="wrap">
@@ -98,6 +98,28 @@
       <p>The guide combines a concrete example with evaluation criteria and safety boundaries rather than treating a fluent summary as evidence of a root cause. It gives engineering teams a starting point for evaluating assistants while preserving human responsibility for operational decisions.</p>
       <h3>References</h3>
       <p>The course AI Lab report and its two fictional test scenarios. The prototype is private and is not presented as publicly accessible.</p>
+    </section>
+    <section id="neural-network">
+      <div class="eyebrow">Artifact 3 · AIML-500</div>
+      <h2>How a Neural Network Learns to Spot Spam</h2>
+      <h3>Introduction</h3>
+      <p>A short, interactive explanation for software colleagues and other readers who want to understand what a neural network does with the clues it receives.</p>
+      <h3>Description</h3>
+      <p>The demo shows how two inputs become a spam score through a small hidden layer. Try four fictional emails, change two weights, and see how the same setting can catch a phishing message and also flag a real password reset.</p>
+      <a class="download" href="neural-network-spam-demo.html">Open the interactive demo</a>
+      <h3>Objective</h3>
+      <p>Explain the difference between computing a prediction and learning weights during training. Use false positives and false negatives to show why the choice of input features and the evaluation data both matter.</p>
+      <h3>Process</h3>
+      <p>This artifact expands the spam example from the Workshop 3 Communicating for Learning activity. The original three steps became an interactive input, hidden layer, and output display. The fictional messages give readers a way to test their understanding. Feedback on the Workshop 2 report informed the emphasis on the consequences of each kind of error.</p>
+      <h3>Tools and technologies used</h3>
+      <p>HTML, CSS, JavaScript, GitHub Pages, and OpenAI Codex. Codex helped draft and revise the explanation and implement the demo. The demo uses hand-set example weights and runs in the browser.</p>
+      <h3>Value proposition</h3>
+      <p>Teams can use this exercise to discuss what evidence an automated filter needs before acting on its score. Two messages with identical inputs and different labels make that limitation visible immediately.</p>
+      <h3>References</h3>
+      <ul>
+        <li>AIML-500 Workshop 3, “Communicating for Learning.”</li>
+        <li>Google for Developers, <a href="https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers">Neural networks: Nodes and hidden layers</a> and <a href="https://developers.google.com/machine-learning/crash-course/neural-networks/backpropagation">Training using backpropagation</a>.</li>
+      </ul>
     </section>
   </main>
   <footer class="wrap">Haixu Song · Graduate coursework portfolio</footer>

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore the inputs, hidden layer, and output of a tiny neural network that scores fictional emails.">
+  <title>How a Neural Network Learns to Spot Spam | Haixu Song</title>
+  <style>
+    :root { color-scheme: light; --ink:#172b3a; --muted:#435a67; --accent:#006d70; --paper:#f6f5f0; --line:#d5e0dc; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:17px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    .wrap { width:min(960px, calc(100% - 36px)); margin:auto; }
+    a { color:var(--accent); text-underline-offset:.18em; }
+    :focus-visible { outline:3px solid #b85320; outline-offset:3px; }
+    header { background:#e3eeea; border-bottom:1px solid var(--line); padding:28px 0 34px; }
+    h1 { font-size:clamp(2rem,6vw,3.65rem); letter-spacing:-.045em; line-height:1.08; max-width:18ch; margin:16px 0 10px; }
+    h2 { font-size:clamp(1.35rem,4vw,1.9rem); letter-spacing:-.025em; line-height:1.2; margin:0 0 .5em; }
+    h3 { font-size:1.08rem; margin:0 0 .5em; }
+    p { margin:.55em 0 1em; }
+    .lede { max-width:67ch; color:var(--muted); margin-bottom:0; }
+    section { padding:29px 0; border-bottom:1px solid var(--line); }
+    .panel { border:1px solid var(--line); border-radius:8px; padding:18px; background:white; min-width:0; }
+    .controls { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .layers { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; }
+    .layers dl { display:grid; grid-template-columns:1fr auto; align-items:baseline; gap:6px 12px; margin:0; }
+    .layers dd { margin:0; }
+    .number { font-variant-numeric:tabular-nums; font-weight:700; }
+    .score { font-size:2rem; font-weight:750; color:var(--accent); }
+    .minor { color:var(--muted); font-size:.91rem; margin-bottom:0; }
+    label { font-weight:650; }
+    select, button { font:inherit; border:1px solid #849b99; color:var(--ink); background:white; border-radius:5px; padding:6px 9px; }
+    select { display:block; width:100%; margin-top:4px; }
+    button { cursor:pointer; margin-top:8px; font-size:.92rem; }
+    input[type=range] { display:block; width:100%; margin:5px 0 10px; accent-color:var(--accent); }
+    table { width:100%; border-collapse:collapse; background:white; font-size:.95rem; }
+    caption { text-align:left; margin:0 0 8px; }
+    th, td { text-align:left; vertical-align:top; border:1px solid var(--line); padding:8px; overflow-wrap:anywhere; }
+    th { background:#e3eeea; }
+    footer { padding:20px 0 34px; }
+    @media (max-width:690px) {
+      .controls, .layers { grid-template-columns:1fr; }
+      th, td { padding:6px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a href="index.html#neural-network">Back to portfolio</a>
+      <h1>How a Neural Network Learns to Spot Spam</h1>
+      <p class="lede">Pick a fictional email and follow its clues through a tiny network. Then change the weights and see which mistakes change.</p>
+    </div>
+  </header>
+  <main class="wrap">
+    <section aria-labelledby="demo-title">
+      <h2 id="demo-title">From clues to a spam score</h2>
+      <p>The network sees two numbers. One counts the links and the other records whether the email sounds urgent. Its hidden layer combines those clues, and its output turns the result into a score between 0 and 1.</p>
+      <div class="controls">
+        <div class="panel">
+          <label for="example">Choose an example email</label>
+          <select id="example">
+            <option value="reset">Real password reset</option>
+            <option value="phishing">Phishing email</option>
+            <option value="giveaway">Fake giveaway</option>
+            <option value="meeting">Meeting note</option>
+          </select>
+          <p class="minor" id="example-description"></p>
+        </div>
+        <div class="panel">
+          <label for="link-weight">Weight on the link signal</label>
+          <output class="number" id="link-value" for="link-weight"></output>
+          <input type="range" id="link-weight" min="0" max="2.5" step="0.1" value="1">
+          <label for="urgency-weight">Weight on links plus urgency</label>
+          <output class="number" id="urgency-value" for="urgency-weight"></output>
+          <input type="range" id="urgency-weight" min="0" max="2.5" step="0.1" value="1.6">
+          <button type="button" id="reset-weights">Reset weights</button>
+        </div>
+      </div>
+      <div class="layers">
+        <div class="panel">
+          <h3>1. Inputs</h3>
+          <dl>
+            <dt>Links</dt><dd class="number" id="input-links"></dd>
+            <dt>Urgent wording</dt><dd class="number" id="input-urgent"></dd>
+          </dl>
+        </div>
+        <div class="panel">
+          <h3>2. Hidden layer</h3>
+          <dl>
+            <dt>Link signal</dt><dd class="number" id="hidden-links"></dd>
+            <dt>Links plus urgency</dt><dd class="number" id="hidden-combined"></dd>
+          </dl>
+          <p class="minor">Each unit combines inputs, then replaces any negative result with zero.</p>
+        </div>
+        <div class="panel">
+          <h3>3. Output</h3>
+          <div aria-live="polite">
+            <span class="score" id="prediction-score"></span>
+            <div id="prediction-label"></div>
+          </div>
+          <p class="minor">A score of 0.500 or higher triggers a spam flag.</p>
+        </div>
+      </div>
+      <details>
+        <summary>See the calculations</summary>
+        <p>The first hidden unit computes max(0, 0.70 × links − 0.65). The second computes max(0, 0.25 × links + 1.10 × urgency − 0.90), where urgency is 1 for yes and 0 for no. The weighted sum of the two hidden values, minus 1.60, passes through a sigmoid to make a score between 0 and 1.</p>
+      </details>
+      <noscript><p>Enable JavaScript to run the demo. The calculations above explain the network without the controls.</p></noscript>
+    </section>
+    <section aria-labelledby="compare-title">
+      <h2 id="compare-title">Compare the four examples</h2>
+      <p>Reduce the weight on links plus urgency to 0.5. Watch what happens to the password reset and the phishing email. Both have the same inputs, so the model gives them the same score even though their true labels differ.</p>
+      <table>
+        <caption>Predictions with the selected weights</caption>
+        <thead><tr><th scope="col">Fictional email</th><th scope="col">True label</th><th scope="col">Score</th><th scope="col">Result</th></tr></thead>
+        <tbody id="case-results"></tbody>
+      </table>
+      <p>What additional clue could help the model tell these messages apart? One possibility is whether the link leads to the service’s known domain. A team would need to test that feature on separate labeled messages.</p>
+    </section>
+    <section aria-labelledby="training-title">
+      <h2 id="training-title">What training changes</h2>
+      <p>Here, you set two weights by hand. During supervised training, the network scores each example, a loss function compares that score with the known label, and an optimizer updates weights to reduce the loss. The demo’s four examples are illustrations. To estimate how well a real filter works on new emails, evaluate it on labeled data it did not train on.</p>
+      <p>OpenAI Codex helped develop the explanation and implement the demo. The examples are fictional and the browser calculations use hand-set weights.</p>
+      <p>Further reading. Google for Developers, <a href="https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers">Nodes and hidden layers</a> and <a href="https://developers.google.com/machine-learning/crash-course/neural-networks/backpropagation">Training using backpropagation</a>.</p>
+    </section>
+  </main>
+  <footer class="wrap">Haixu Song · AIML-500 coursework portfolio</footer>
+  <script>
+    const examples = {
+      reset: { name: "Real password reset", links: 2, urgent: true, spam: false, description: "A legitimate account message asks the recipient to act before a reset link expires." },
+      phishing: { name: "Phishing email", links: 2, urgent: true, spam: true, description: "A fake account message threatens to lock the recipient out and points to an imitation sign-in page." },
+      giveaway: { name: "Fake giveaway", links: 5, urgent: true, spam: true, description: "A suspicious message demands immediate action to claim a prize and contains five links." },
+      meeting: { name: "Meeting note", links: 0, urgent: false, spam: false, description: "A colleague confirms a meeting time in plain text." }
+    };
+    const element = id => document.getElementById(id);
+    const fixed = number => number.toFixed(2);
+    const rectified = number => Math.max(0, number);
+
+    function predict(example, linkWeight, urgencyWeight) {
+      const linkSignal = rectified(0.70 * example.links - 0.65);
+      const combinedSignal = rectified(0.25 * example.links + 1.10 * Number(example.urgent) - 0.90);
+      const weightedSum = linkWeight * linkSignal + urgencyWeight * combinedSignal - 1.60;
+      const score = 1 / (1 + Math.exp(-weightedSum));
+      return { linkSignal, combinedSignal, score, flagged: score >= 0.5 };
+    }
+
+    function outcome(example, flagged) {
+      if (flagged === example.spam) return flagged ? "Caught spam" : "Passed legitimate mail";
+      return flagged ? "False positive" : "Missed spam";
+    }
+
+    function render() {
+      const example = examples[element("example").value];
+      const linkWeight = Number(element("link-weight").value);
+      const urgencyWeight = Number(element("urgency-weight").value);
+      const prediction = predict(example, linkWeight, urgencyWeight);
+      element("example-description").textContent = example.description;
+      element("link-value").value = linkWeight.toFixed(1);
+      element("urgency-value").value = urgencyWeight.toFixed(1);
+      element("input-links").textContent = example.links;
+      element("input-urgent").textContent = example.urgent ? "Yes" : "No";
+      element("hidden-links").textContent = fixed(prediction.linkSignal);
+      element("hidden-combined").textContent = fixed(prediction.combinedSignal);
+      element("prediction-score").textContent = prediction.score.toFixed(3);
+      element("prediction-label").textContent = (prediction.flagged ? "Flagged as spam" : "Passed through") + " · " + outcome(example, prediction.flagged);
+      const rows = Object.values(examples).map(item => {
+        const result = predict(item, linkWeight, urgencyWeight);
+        const row = document.createElement("tr");
+        for (const value of [item.name, item.spam ? "Spam" : "Legitimate", result.score.toFixed(3), outcome(item, result.flagged)]) {
+          const cell = document.createElement("td");
+          cell.textContent = value;
+          row.append(cell);
+        }
+        return row;
+      });
+      element("case-results").replaceChildren(...rows);
+    }
+
+    element("example").addEventListener("change", render);
+    element("link-weight").addEventListener("input", render);
+    element("urgency-weight").addEventListener("input", render);
+    element("reset-weights").addEventListener("click", () => {
+      element("link-weight").value = "1";
+      element("urgency-weight").value = "1.6";
+      render();
+    });
+    render();
+  </script>
+</body>
+</html>
