@@ -36,7 +36,7 @@
       <div class="eyebrow">Professional portfolio</div>
       <h1>Haixu Song</h1>
       <p class="lede">Senior software engineer and student of machine learning fundamentals.</p>
-      <a href="#project">Explore the timeline</a> · <a href="#incident-guide">Read the incident-review guide</a> · <a href="#neural-network">Try the neural network demo</a>
+      <a href="#project">Explore the timeline</a> · <a href="#incident-guide">Read the incident-review guide</a> · <a href="#neural-network">Try the neural network demo</a> · <a href="#triage-bias-audit">Use the retail triage audit</a>
     </div>
   </header>
   <main class="wrap">
@@ -119,6 +119,29 @@
       <ul>
         <li>AIML-500 Workshop 3, “Communicating for Learning.”</li>
         <li>Google for Developers, <a href="https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers">Neural networks: Nodes and hidden layers</a> and <a href="https://developers.google.com/machine-learning/crash-course/neural-networks/backpropagation">Training using backpropagation</a>.</li>
+      </ul>
+    </section>
+    <section id="triage-bias-audit">
+      <div class="eyebrow">Artifact 4 · AIML-500</div>
+      <h2>Bias Audit for Retail Issue Triage</h2>
+      <h3>Introduction</h3>
+      <p>Retail engineering and operations leads can use this worksheet to decide what evidence they need before piloting a model that prioritizes reports of product availability problems.</p>
+      <h3>Description</h3>
+      <p>A fictional example compares missed urgent reports across stores with different ticket volumes. A pre-pilot checklist takes the example from measurement to a review decision.</p>
+      <a class="download" href="retail-triage-bias-audit.html">Open the audit worksheet</a>
+      <h3>Objective</h3>
+      <p>Identify the groups a pooled error rate can mask and define the samples, error limits, and human review process needed for a pilot.</p>
+      <h3>Process</h3>
+      <p>I expanded the Workshop 4 discussion scenario with a fictional test set, a worked comparison, and an audit checklist. Feedback on my neural network demo encouraged me to show the consequences of different errors and state the limits of the example. The same approach here shows who waits longer for an urgent issue to be seen and what extra work a false alarm creates.</p>
+      <h3>Tools and technologies used</h3>
+      <p>HTML, CSS, and GitHub Pages. OpenAI Codex helped develop the fictional example, edit the worksheet, and build the page.</p>
+      <h3>Value proposition</h3>
+      <p>The worksheet gives reviewers a common place to record the evidence, a launch decision, and who will review disputed priorities. It can be adapted to other issue-routing workflows by replacing the groups, urgency criteria, and error limits.</p>
+      <h3>References</h3>
+      <ul>
+        <li>AIML-500 Workshop 4, “Navigating Human Bias.”</li>
+        <li>NIST, <a href="https://airc.nist.gov/airmf-resources/playbook/measure/">AI Risk Management Framework Playbook, Measure</a>.</li>
+        <li>Google for Developers, <a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall">Classification metrics</a>.</li>
       </ul>
     </section>
   </main>

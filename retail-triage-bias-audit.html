@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A worked bias audit and pre-pilot checklist for a retail issue triage model.">
+  <title>Bias Audit for Retail Issue Triage | Haixu Song</title>
+  <style>
+    :root { color-scheme:light; --ink:#172b3a; --muted:#435a67; --accent:#006d70; --paper:#f6f5f0; --line:#d5e0dc; --wash:#e3eeea; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:17px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    .wrap { width:min(920px, calc(100% - 40px)); margin:auto; }
+    a { color:var(--accent); text-underline-offset:.18em; }
+    a:focus-visible { outline:3px solid #d87d47; outline-offset:4px; }
+    header { padding:32px 0 36px; background:var(--wash); border-bottom:1px solid var(--line); }
+    h1 { font-size:clamp(2rem, 5vw, 3.6rem); letter-spacing:-.045em; line-height:1.06; margin:.42em 0 .22em; }
+    h2 { font-size:clamp(1.45rem, 3vw, 2rem); letter-spacing:-.025em; line-height:1.2; margin:0 0 .55em; }
+    p { margin:.5em 0 .85em; }
+    .lede { max-width:65ch; color:var(--muted); }
+    section { padding:30px 0; border-bottom:1px solid var(--line); }
+    table { width:100%; margin:18px 0; border-collapse:collapse; background:white; font-variant-numeric:tabular-nums; }
+    caption { text-align:left; font-weight:700; }
+    th, td { text-align:right; border-bottom:1px solid var(--line); padding:9px 12px; }
+    thead, tfoot { background:var(--wash); }
+    th:first-child { text-align:left; }
+    .decision { padding:14px 18px; border-left:4px solid var(--accent); background:var(--wash); }
+    ol, ul { padding-left:1.4em; }
+    li { padding-left:.2em; margin:.65em 0; }
+    footer { padding:20px 0 36px; color:var(--muted); font-size:.92rem; }
+    @media (max-width:520px) { th, td { padding:8px 6px; font-size:.83rem; } section { padding:24px 0; } }
+    @media print { body { background:white; font-size:11pt; } header, section { padding:12px 0; } nav { display:none; } table, .decision, h2 { break-inside:avoid; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav aria-label="Portfolio"><a href="index.html#triage-bias-audit">Back to the portfolio</a></nav>
+      <h1>Bias Audit for Retail Issue Triage</h1>
+      <p class="lede">A worksheet for engineering and operations leads reviewing a model that prioritizes reports of product availability problems.</p>
+    </div>
+  </header>
+  <main class="wrap">
+    <section aria-labelledby="worked-example">
+      <h2 id="worked-example">Worked example</h2>
+      <p>In this fictional pilot, high-volume stores submitted more reports and received faster escalation in the past. The audit compares predictions with urgency labels set by operations reviewers using observable impact, including how many products were affected and how long the problem lasted.</p>
+      <table>
+        <caption>Fictional results on an evaluation set</caption>
+        <thead>
+          <tr><th scope="col">Store group</th><th scope="col">Urgent reports</th><th scope="col">Urgent misses</th><th scope="col">Miss rate</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Higher volume</th><td>80</td><td>8</td><td>10%</td></tr>
+          <tr><th scope="row">Lower volume</th><td>20</td><td>10</td><td>50%</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><th scope="row">All stores</th><td>100</td><td>18</td><td>18%</td></tr>
+        </tfoot>
+      </table>
+      <p>The miss rate is the number of urgent reports the model failed to flag divided by the number reviewers judged urgent. The groups differ by 40 percentage points.</p>
+      <p class="decision"><strong>Pause rollout in this example.</strong> The pooled rate meets the illustrative 20% limit. The model misses one in two urgent reports from lower-volume stores, which exceeds the limit for that group. Review the ten missed cases with that group, collect more cases, and retest before expanding.</p>
+      <p>Twenty urgent reports give a limited estimate of lower-volume performance. Investigate report detail, channel, and reviewer disagreements before assigning a cause. Compare false alarms among non-urgent reports as well, since those take time away from staff reviewing real issues.</p>
+    </section>
+    <section aria-labelledby="checklist">
+      <h2 id="checklist">Pre-pilot review checklist</h2>
+      <ol>
+        <li><strong>Record the intended workflow and owner.</strong> Name the engineering and operations leads, what the score will influence, and who stays responsible for routing reports.</li>
+        <li><strong>Check coverage and labels.</strong> Count reports by store volume, channel, and region before and after cleaning. Include short reports. Have two reviewers independently apply a written urgency rule and resolve sample disagreements.</li>
+        <li><strong>Reserve an evaluation set.</strong> Hold out stores and a later period from training and threshold tuning. Keep reports of the same issue together. Record denominators, urgent misses, and false alarms for each group.</li>
+        <li><strong>Set limits before reviewing results.</strong> Agree on acceptable rates and the evidence needed per group. Record the reason to collect more data, revise the model, or start a limited pilot.</li>
+        <li><strong>Give staff an escalation path.</strong> Assign a reviewer for disputed priorities, agree on a response time, and log the correction. Review overrides and error rates after launch. Give the operations owner authority to revert to manual routing.</li>
+      </ol>
+    </section>
+    <section aria-labelledby="references">
+      <h2 id="references">References</h2>
+      <ul>
+        <li>NIST, <a href="https://airc.nist.gov/airmf-resources/playbook/measure/">AI Risk Management Framework Playbook, Measure</a>.</li>
+        <li>Google for Developers, <a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall">Classification metrics</a>.</li>
+      </ul>
+    </section>
+  </main>
+  <footer class="wrap">Haixu Song · AIML-500 coursework. OpenAI Codex assisted with drafting, calculations, and page construction.</footer>
+</body>
+</html>
